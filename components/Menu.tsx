@@ -1,0 +1,31 @@
+"use client"
+
+import { motion } from "framer-motion"
+import { FaGamepad, FaHamburger } from "react-icons/fa"
+
+type MenuProps = {
+    difficulty: string;
+    setDifficulty: (value: string) => void;
+    startGame: () => void;
+    bestScore: number;
+};
+
+export default function Menu({ difficulty, setDifficulty, startGame, bestScore } : MenuProps) {
+
+    return (
+        <div className="flex items-center justify-center flex-col gap-10 h-full w-full">
+            <motion.div animate={{ rotate: [0, -3, 3, -2, 2, 0], y: [0, -6, 0], scale: [1, 1.02, 1] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", }} className="flex items-center gap-3"><motion.h2 animate={{ textShadow: ["0px 0px 0px rgba(255,255,255,0)", "0px 0px 20px rgba(255,255,255,0.4)", "0px 0px 0px rgba(255,255,255,0)"] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="text-4xl font-bold italic text-white drop-shadow-2xl">Komodo Game</motion.h2><motion.img animate={{ y: [0, -10, 0], rotate: [0, 2, -2, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }} className="w-24 drop-shadow-2xl" src="komodo.png" alt="Komodo" /></motion.div>
+            <div className="flex flex-col items-center w-fit">
+                <div className="flex items-center gap-2">
+                    {["Facile", "Intermédiaire", "Difficile"].map((v, k) => (
+                        <button key={k} onClick={() => setDifficulty(v)} className={`px-4 py-2 rounded-xl text-white font-bold ${v === difficulty ? "bg-white/60" : "bg-white/20"} backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/30 hover:scale-105 active:scale-95 transition-all duration-500 cursor-pointer`}>{v}</button>
+                    ))}
+                </div>
+                <div className="flex items-center w-full justify-center gap-3 my-3">
+                    <button onClick={startGame} className="w-full p-4 bg-white/30 rounded-xl hover:bg-white/20 transition duration-500 cursor-pointer flex items-center justify-center gap-3 text-white font-bold backdrop-blur-md"><FaGamepad size={24} />Jouer</button>
+                </div>
+                <p className="font-bold text-center text-white/70">Meilleur score : <span className="text-2xl">{bestScore}</span></p>
+            </div>
+        </div>
+    )
+}
