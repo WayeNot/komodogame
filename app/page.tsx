@@ -12,12 +12,14 @@ import { useMusic } from "@/components/hooks/useAudio";
 export default function Home() {
     const SCREEN_WIDTH = 600
     const SCREEN_HEIGHT = 900
-    const PLAYER_SIZE = 100
-    const PLAYER_X = 100
+    const PLAYER_SIZE = 80
+    const PLAYER_X = 80
     const PIPE_WIDTH = 70
     const GAP = 220
     const GRAVITY = 0.45
     const JUMP = -9
+
+    const main_character = "/characters/komodo.png"
 
     const [displayMenu, setDisplayMenu] = useState(true)
     const [displayGame, setDisplayGame] = useState(false)
@@ -201,9 +203,9 @@ export default function Home() {
 
     return (
         <div className="relative h-screen w-screen bg-black overflow-hidden flex items-center justify-center">
-            <div className={`relative overflow-hidden rounded-[20px] w-150 h-225 bg-center bg-cover bg-[url("https://freedesignfile.com/upload/2018/02/Underwater-world-game-background-vector-01.jpg")]`}>
-                {displayGame && <Game SCREEN_WIDTH={SCREEN_WIDTH} SCREEN_HEIGHT={SCREEN_HEIGHT} PLAYER_SIZE={PLAYER_SIZE} PLAYER_X={PLAYER_X} PLAYER_Y={playerY} PIPE_WIDTH={PIPE_WIDTH} GAP={GAP} obstacles={obstacles} velocityRef={velocityRef} gameLoop={gameLoop} score={score} jump={jump} endGame={endGame} setDisplayGame={(v) => setDisplayGame(v)} setDisplayPauseMenu={(v) => setDisplayPauseMenu(v)} />}
-                {displayMenu && <Menu bestScore={bestScore} difficulty={difficulty} setDifficulty={v => setDifficulty(v)} startGame={startGame} />}
+            <div className={`relative overflow-hidden rounded-[20px] w-150 h-225 bg-center bg-cover ${(displayMenu || displayPauseMenu) && "bg-[url('/backgrounds/menu.png')]"} ${(displayGame) && "bg-[url('/backgrounds/game.png')]"} ${(displayGameOver) && "bg-[url('/backgrounds/gameOver.png')]"}`}>
+                {displayGame && <Game SCREEN_WIDTH={SCREEN_WIDTH} SCREEN_HEIGHT={SCREEN_HEIGHT} PLAYER_SIZE={PLAYER_SIZE} PLAYER_X={PLAYER_X} PLAYER_Y={playerY} PIPE_WIDTH={PIPE_WIDTH} GAP={GAP} main_character={main_character} obstacles={obstacles} velocityRef={velocityRef} gameLoop={gameLoop} score={score} bestScore={bestScore} jump={jump} endGame={endGame} setDisplayGame={(v) => setDisplayGame(v)} setDisplayPauseMenu={(v) => setDisplayPauseMenu(v)} />}
+                {displayMenu && <Menu main_character={main_character} bestScore={bestScore} difficulty={difficulty} setDifficulty={v => setDifficulty(v)} startGame={startGame} />}
                 {displayPauseMenu && <PauseMenu setDisplayPauseMenu={v => setDisplayPauseMenu(v)} setDisplayGame={v => setDisplayGame(v)} setDisplayMenu={v => setDisplayMenu(v)} />}
                 {displayGameOver && <GameOver setDisplayMenu={v => setDisplayMenu(v)} setDisplayGameOver={v => setDisplayGameOver(v)} startGame={startGame} score={score} bestScore={bestScore} />}
             </div>
