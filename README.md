@@ -104,13 +104,11 @@ hard_best_score
 
 ## 📸 Aperçu
 
-Ajoute ici un screenshot du jeu :
-
 ```md
-![Komodo Game Screenshot](./public/screenshots/menu.png)
-![Komodo Game Screenshot](./public/screenshots/game.png)
-![Komodo Game Screenshot](./public/screenshots/pauseMenu.png)
-![Komodo Game Screenshot](./public/screenshots/gameOver.png)
+![Komodo Game Screenshot](screenshots/menu.png)
+![Komodo Game Screenshot](screenshots/game.png)
+![Komodo Game Screenshot](screenshots/pauseMenu.png)
+![Komodo Game Screenshot](screenshots/gameOver.png)
 
 ```
 
