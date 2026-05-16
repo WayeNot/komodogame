@@ -102,18 +102,6 @@ hard_best_score
 
 ---
 
-## 📸 Aperçu
-
-```md
-![Menu](public/screenshots/menu.png)
-![Game](public/screenshots/game.png)
-![Menu pause](public/screenshots/pauseMenu.png)
-![Game over](public/screenshots/gameOver.png)
-
-```
-
----
-
 ## 📜 Licence
 
 Projet open-source sous licence MIT.
