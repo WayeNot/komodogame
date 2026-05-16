@@ -105,10 +105,10 @@ hard_best_score
 ## 📸 Aperçu
 
 ```md
-![Komodo Game Screenshot](screenshots/menu.png)
-![Komodo Game Screenshot](screenshots/game.png)
-![Komodo Game Screenshot](screenshots/pauseMenu.png)
-![Komodo Game Screenshot](screenshots/gameOver.png)
+![Menu](public/screenshots/menu.png)
+![Game](public/screenshots/game.png)
+![Menu pause](public/screenshots/pauseMenu.png)
+![Game over](public/screenshots/gameOver.png)
 
 ```
 
