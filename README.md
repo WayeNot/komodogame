@@ -102,12 +102,6 @@ hard_best_score
 
 ---
 
-## 📜 Licence
-
-Projet open-source sous licence MIT.
-
----
-
 ## ❤️ Auteur
 
-Développé avec passion par **Ewen & Aymeric**.
+Développé par **Ewen & Aymeric**.
