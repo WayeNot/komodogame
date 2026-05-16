@@ -46,9 +46,9 @@ export default function Home() {
     }, [score])
 
     const musics = [
-        { author: "Eric Skiff", label: "Underclocked", audio: "1.mp4", cover: "https://imgs.search.brave.com/lhfq0tPM4kAm4SIrpqWu7T1xCEy6A3arayMDG9uGOKE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLTAwMDAx/OTU5MzY0NS1jaXdv/amctdDEwODB4MTA4/MC5qcGc" },
-        { author: "Density & Time", label: "MAZE", audio: "2.mp4", cover: "https://imgs.search.brave.com/sNsHQH8fvVak7ruMcVbAJULXUL7WYW0Kf4wKUEYCSNU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zb3Vy/Y2UuYm9vbXBsYXlt/dXNpYy5jb20vZ3Jv/dXAxMC9NMDAvMDQv/MTAvY2U4MGIxN2Fm/ZjE4NGNiNTk4NDQx/MzEzNzYyOTQ5Yzdf/MzIwXzMyMC5qcGc" },
-        { author: "Jeremy Blake", label: "Powerup!", audio: "3.mp4", cover: "https://imgs.search.brave.com/-awO8gSP7bhndsZoDJr1EWgQKGwGSvDgwMjZb28e8q8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLXlEajBM/WE03MmYwTWpjMzEt/MVdzc3l3LXQxMDgw/eDEwODAuanBn" },
+        { author: "Eric Skiff", label: "Underclocked", audio: "1.mp3", cover: "1.webp" },
+        { author: "Density & Time", label: "MAZE", audio: "2.mp3", cover: "2.webp" },
+        { author: "Jeremy Blake", label: "Powerup!", audio: "3.mp3", cover: "3.webp" },
     ]
 
     const { current, playRandom, skip } = useMusic(musics, soundMuted)
@@ -62,7 +62,7 @@ export default function Home() {
         setDisplayGameOver(false)
         setScore(0)
         setPlayerY(300)
-        setObstacles([{ id: String(Date.now()), x: SCREEN_WIDTH + 200, topHeight: Math.random() * 250 + 100, passed: false }])
+        setObstacles([{ id: crypto.randomUUID(), x: SCREEN_WIDTH + 200, topHeight: Math.random() * 250 + 100, passed: false }])
 
         velocityRef.current = 0
         playRandom()
@@ -72,20 +72,8 @@ export default function Home() {
         if (!soundMuted) return
     }, [soundMuted])
 
-    const playJumpSound = () => {
-        const audio = new Audio("/audio/jump.mp3")
-        audio.volume = soundMuted ? 0.0 : 0.4
-        audio.play()
-    }
-
-    const playGameOverSound = () => {
-        const audio = new Audio("/audio/gameOver.mp3")
-        audio.volume = soundMuted ? 0.0 : 0.4
-        audio.play()
-    }
-
-    const playSuccessSound = () => {
-        const audio = new Audio("/audio/success.mp3")
+    const playSound = (sound: string) => {
+        const audio = new Audio(`/audio/sound/${sound}.mp3`)
         audio.volume = soundMuted ? 0.0 : 0.4
         audio.play()
     }
@@ -93,11 +81,11 @@ export default function Home() {
     const jump = () => {
         if (!displayGame) return
         velocityRef.current = JUMP
-        playJumpSound()
+        playSound("jump")
     }
 
     const endGame = () => {
-        playGameOverSound()
+        playSound("gameOver")
 
         gameLoop.current && clearInterval(gameLoop.current)
         setDisplayGame(false)
@@ -193,10 +181,18 @@ export default function Home() {
             }
 
             if (!obs.passed && obs.x + PIPE_WIDTH < PLAYER_X) {
-                obs.passed = true
+                setObstacles(prev => prev.map(o => o.id === obs.id ? { ...o, passed: true } : o))
 
-                setScore((p) => p + 1)
-                playSuccessSound()
+                setScore(p => {
+                    const next = p + 1
+
+                    if (score === bestScore) {
+                        playSound("bestScore")
+                    } else {
+                        playSound("success")
+                    }
+                    return next
+                })
             }
         }
     }, [playerY, obstacles, displayGame])

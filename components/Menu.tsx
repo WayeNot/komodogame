@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { FaGamepad, FaHamburger } from "react-icons/fa"
 
 type MenuProps = {
     main_character: string;

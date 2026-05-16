@@ -15,11 +15,11 @@ type Props = {
 
 export default function MusicBar({ music, muted, toggleMute, skip }: Props) {
     return (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-130 flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-black/20 backdrop-blur-xl border border-white/10">
+        <div className="absolute bottom-4 left-1/2 z-15 -translate-x-1/2 w-[90%] max-w-130 flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-black/20 backdrop-blur-xl border border-white/10">
             <div className="flex-1 text-white text-xs truncate">
                 {music ? (
                     <div className="flex items-center gap-2">
-                        <motion.img src={music.cover} className="w-6 h-6 rounded-md" animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2.5, repeat: Infinity }}/>
+                        <motion.img src={`/audio/music/covers/${music.cover}`} className="w-6 h-6 rounded-md" animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2.5, repeat: Infinity }}/>
                         <span className="flex items-center gap-1"><LuMicVocal />{music.author}</span>
                         <span>|</span>
                         <span className="flex items-center gap-1"><GiLoveSong />{music.label}</span>
