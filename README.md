@@ -1,10 +1,6 @@
 # 🦎 Komodo Game
 
-<p align="center">
-  <a href="https://komodogame.vercel.app/" target="_blank">
-    🎮 <b>Play Komodo Game</b> 🚀
-  </a>
-</p>
+👉 **Jouez dès maintenant :** https://komodogame.vercel.app/
 
 Komodo Game est un mini jeu arcade inspiré du gameplay de **Flappy Bird**, développé avec **Next.js**, **TypeScript**, **TailwindCSS** et **Framer Motion**.
 
