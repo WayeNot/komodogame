@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🦎 Komodo Game
 
-## Getting Started
+Komodo Game est un mini jeu arcade inspiré du gameplay de **Flappy Bird**, développé avec **Next.js**, **TypeScript**, **TailwindCSS** et **Framer Motion**.
 
-First, run the development server:
+Le joueur contrôle un petit dragon de Komodo qui doit éviter des obstacles générés dynamiquement tout en augmentant son score.
+
+---
+
+## ✨ Fonctionnalités
+
+* 🎮 Gameplay fluide type Flappy Bird
+* ⚡ Difficultés dynamiques
+
+  * Easy
+  * Intermediate
+  * Hard
+* 🏆 Sauvegarde des meilleurs scores avec `localStorage`
+* 🎵 Musiques aléatoires intégrées
+* 🔇 Système de mute
+* ⏭️ Skip de musique
+* ⏸️ Pause du jeu
+* 💥 Détection de collisions
+* 🌈 Animations avec Framer Motion
+* 📱 Interface responsive et moderne
+
+---
+
+## 🛠️ Stack Technique
+
+* **Next.js 16**
+* **TypeScript**
+* **TailwindCSS**
+* **Framer Motion**
+* **React Icons**
+
+---
+
+## 🚀 Installation
+
+Clone le projet :
+
+```bash
+git clone https://github.com/WayeNot/komodogame.git
+```
+
+Entre dans le dossier :
+
+```bash
+cd komodogame
+```
+
+Installe les dépendances :
+
+```bash
+npm install
+```
+
+Lance le serveur de développement :
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Puis ouvre :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🎮 Contrôles
 
-To learn more about Next.js, take a look at the following resources:
+| Action          | Touche             |
+| --------------- | ------------------ |
+| Voler           | `SPACE` ou `CLICK` |
+| Pause           | Bouton paramètres  |
+| Mute musique    | Bouton mute        |
+| Changer musique | Bouton skip        |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 Système de difficulté
 
-## Deploy on Vercel
+Le jeu adapte automatiquement :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* la vitesse des obstacles
+* leur espacement
+* la difficulté globale
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 💾 Sauvegarde des scores
+
+Les meilleurs scores sont stockés dans le navigateur avec :
+
+```txt
+easy_best_score
+intermediate_best_score
+hard_best_score
+```
+
+---
+
+## 📸 Aperçu
+
+Ajoute ici un screenshot du jeu :
+
+```md
+![Komodo Game Screenshot](./public/screenshots/menu.png)
+![Komodo Game Screenshot](./public/screenshots/game.png)
+![Komodo Game Screenshot](./public/screenshots/pauseMenu.png)
+![Komodo Game Screenshot](./public/screenshots/gameOver.png)
+
+```
+
+---
+
+## 📜 Licence
+
+Projet open-source sous licence MIT.
+
+---
+
+## ❤️ Auteur
+
+Développé avec passion par **Ewen & Aymeric**.

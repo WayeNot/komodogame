@@ -50,7 +50,7 @@ export default function Game({ SCREEN_HEIGHT, PLAYER_SIZE, PLAYER_X, PLAYER_Y, P
                 <div className="flex flex-col items-center gap-3">
                     <motion.div key={score + 1000} initial={{ scale: 1.6 }} animate={{ scale: 1 }} className="text-4xl">{score}</motion.div>
                     <motion.div key={bestScore} initial={{ scale: 1.6 }} animate={{ scale: 1 }} className=" text-[14px]">Best : {bestScore}</motion.div>
-                    <IoSettingsSharp size={26} className="text-white hover:text-orange-400 transition duration-500 cursor-pointer" onClick={e => { e.stopPropagation(); pauseGame() }} />
+                    <IoSettingsSharp size={26} className="text-white hover:text-blue-400 transition duration-500 cursor-pointer" onClick={e => { e.stopPropagation(); pauseGame() }} />
                 </div>
             </div>
             <motion.img animate={{ rotate: velocityRef.current * 3, y: [0, -3, 0] }} transition={{ duration: 0.15 }} src={main_character} alt="Komodo" className="absolute z-40 drop-shadow-2xl select-none pointer-events-none" style={{ width: PLAYER_SIZE, left: PLAYER_X, top: PLAYER_Y }} />

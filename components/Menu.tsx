@@ -23,7 +23,7 @@ export default function Menu({ main_character, difficulty, setDifficulty, startG
                         <button key={k} onClick={() => setDifficulty(v)} className={`px-4 py-2 rounded-xl text-white font-bold ${v === difficulty ? "bg-white/60" : "bg-white/20"} backdrop-blur-md border border-white/30 shadow-lg hover:bg-white/30 hover:scale-105 active:scale-95 transition-all duration-500 cursor-pointer`}>{v}</button>
                     ))}
                 </div>
-                <button onClick={startGame} className="w-full py-4 my-3 bg-orange-500 rounded-xl hover:bg-orange-400 transition duration-500 cursor-pointer text-white font-bold text-xl">Jouer</button>
+                <button onClick={startGame} className="w-full py-4 my-3 bg-blue-500 rounded-xl hover:bg-blue-400 transition duration-500 cursor-pointer text-white font-bold text-xl">Jouer</button>
                 <p className="font-bold text-center text-white/70">Meilleur score : <span className="text-2xl">{bestScore || 0}</span></p>
             </div>
         </div>

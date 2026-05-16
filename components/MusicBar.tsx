@@ -33,7 +33,7 @@ export default function MusicBar({ music, muted, togglePause, paused, toggleMute
             </div>
 
             <div className="flex gap-2">
-                {music && <button onClick={togglePause} className="p-2 rounded-lg bg-white/10 hover:bg-white/20">{paused ? <FaPause /> : <RxResume />}</button>}
+                {music && <button onClick={togglePause} className="p-2 rounded-lg bg-white/10 hover:bg-white/20">{paused ? <RxResume/> : <FaPause/>}</button>}
                 {music ? <button onClick={skip} className="p-2 rounded-lg bg-white/10 hover:bg-white/20"><MdSkipNext /></button> : <button onClick={skip} className="p-2 rounded-lg bg-white/10 hover:bg-white/20"><RxResume /></button>}
                 <button onClick={toggleMute} className="p-2 rounded-lg bg-white/10 hover:bg-white/20">{muted ? <VscMute /> : <VscUnmute />}</button>
             </div>
