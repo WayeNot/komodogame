@@ -5,4 +5,4 @@ export type Obstacle = {
     passed: boolean;
 }
 
-export type Difficulty = "Facile" | "Intermédiaire" | "Difficile"
+export type Difficulty = "easy" | "intermediate" | "hard";

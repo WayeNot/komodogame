@@ -11,6 +11,7 @@ export function useMusic(musics: Music[], muted: boolean) {
     const audioRef = useRef<HTMLAudioElement | null>(null)
 
     const [current, setCurrent] = useState<Music | null>(null)
+    const [paused, setPaused] = useState(false)
 
     const playRandom = () => {
         if (audioRef.current) {
@@ -30,6 +31,18 @@ export function useMusic(musics: Music[], muted: boolean) {
         setCurrent(music)
     }
 
+    const togglePause = () => {
+        if (!audioRef.current) return
+
+        if (paused) {
+            audioRef.current.play()
+        } else {
+            audioRef.current.pause()
+        }
+
+        setPaused(!paused)
+    }
+
     const setMuted = (muted: boolean) => {
         if (audioRef.current) {
             audioRef.current.volume = muted ? 0 : 0.02
@@ -43,6 +56,8 @@ export function useMusic(musics: Music[], muted: boolean) {
         playRandom,
         skip,
         setMuted,
+        togglePause,
+        paused,
         audioRef,
     }
 }

@@ -8,6 +8,7 @@ import PauseMenu from "@/components/PauseMenu";
 import GameOver from "@/components/GameOver";
 import MusicBar from "@/components/MusicBar";
 import { useMusic } from "@/components/hooks/useAudio";
+import { number } from "framer-motion";
 
 export default function Home() {
     const SCREEN_WIDTH = 600
@@ -26,19 +27,27 @@ export default function Home() {
     const [displayPauseMenu, setDisplayPauseMenu] = useState(false)
     const [displayGameOver, setDisplayGameOver] = useState(false)
     const [score, setScore] = useState(0)
-    const [bestScore, setBestScore] = useState(0)
+    const [bestScore, setBestScore] = useState<{ easy: number; intermediate: number; hard: number; }>({ easy: 0, intermediate: 0, hard: 0 })
     const [playerY, setPlayerY] = useState(300)
     const velocityRef = useRef(0)
     const [obstacles, setObstacles] = useState<Obstacle[]>([])
     const [soundMuted, setSoundMuted] = useState(false)
-    const [difficulty, setDifficulty] = useState<Difficulty | string>("Facile")
+    const [difficulty, setDifficulty] = useState<Difficulty>("easy")
 
     const gameLoop = useRef<NodeJS.Timeout | null>(null)
     const scoreRef = useRef(0)
 
     useEffect(() => {
-        const saved = localStorage.getItem("komodo_best")
-        saved && setBestScore(Number(saved))
+        const easyBestScore = localStorage.getItem("easy_best_score")
+        !easyBestScore && localStorage.setItem("easy_best_score", "0")
+
+        const intermediateBestScore = localStorage.getItem("intermediate_best_score")
+        !intermediateBestScore && localStorage.setItem("intermediate_best_score", "0")
+
+        const hardBestScore = localStorage.getItem("hard_best_score")
+        !hardBestScore && localStorage.setItem("hard_best_score", "0")
+
+        setBestScore({ easy: Number(easyBestScore) || 0, intermediate: Number(intermediateBestScore) || 0, hard: Number(hardBestScore) || 0 })
     }, [])
 
     useEffect(() => {
@@ -51,7 +60,7 @@ export default function Home() {
         { author: "Jeremy Blake", label: "Powerup!", audio: "3.mp3", cover: "3.webp" },
     ]
 
-    const { current, playRandom, skip } = useMusic(musics, soundMuted)
+    const { current, playRandom, skip, setMuted, togglePause, paused } = useMusic(musics, soundMuted)
 
     const startGame = () => {
         gameLoop.current && clearInterval(gameLoop.current)
@@ -69,7 +78,7 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (!soundMuted) return
+        setMuted(soundMuted)
     }, [soundMuted])
 
     const playSound = (sound: string) => {
@@ -91,12 +100,10 @@ export default function Home() {
         setDisplayGame(false)
         setDisplayGameOver(true)
 
-        if (score > bestScore) {
-            setBestScore(score)
-            localStorage.setItem(
-                "komodo_best",
-                score.toString()
-            )
+        if (score > bestScore[difficulty]) {
+            const updated = { ...bestScore, [difficulty]: score }
+            setBestScore(updated)
+            localStorage.setItem(`${difficulty}_best_score`, score.toString())
         }
     }
 
@@ -115,7 +122,7 @@ export default function Home() {
     useEffect(() => {
         if (!displayGame) return
 
-        const difficultyMultiplier = { Facile: 1, Intermédiaire: 1.25, Difficile: 1.5 }[difficulty]
+        const difficultyMultiplier = { easy: 1, intermediate: 1.25, hard: 1.5 }[difficulty]
 
         gameLoop.current = setInterval(() => {
             velocityRef.current = Math.min(velocityRef.current + GRAVITY, 12)
@@ -186,7 +193,7 @@ export default function Home() {
                 setScore(p => {
                     const next = p + 1
 
-                    if (score === bestScore) {
+                    if (next === bestScore[difficulty] && next !== 0) {
                         playSound("bestScore")
                     } else {
                         playSound("success")
@@ -200,12 +207,12 @@ export default function Home() {
     return (
         <div className="relative h-screen w-screen bg-black overflow-hidden flex items-center justify-center">
             <div className={`relative overflow-hidden rounded-[20px] w-150 h-225 bg-center bg-cover ${(displayMenu || displayPauseMenu) && "bg-[url('/backgrounds/menu.png')]"} ${(displayGame) && "bg-[url('/backgrounds/game.png')]"} ${(displayGameOver) && "bg-[url('/backgrounds/gameOver.png')]"}`}>
-                {displayGame && <Game SCREEN_WIDTH={SCREEN_WIDTH} SCREEN_HEIGHT={SCREEN_HEIGHT} PLAYER_SIZE={PLAYER_SIZE} PLAYER_X={PLAYER_X} PLAYER_Y={playerY} PIPE_WIDTH={PIPE_WIDTH} GAP={GAP} main_character={main_character} obstacles={obstacles} velocityRef={velocityRef} gameLoop={gameLoop} score={score} bestScore={bestScore} jump={jump} endGame={endGame} setDisplayGame={(v) => setDisplayGame(v)} setDisplayPauseMenu={(v) => setDisplayPauseMenu(v)} />}
-                {displayMenu && <Menu main_character={main_character} bestScore={bestScore} difficulty={difficulty} setDifficulty={v => setDifficulty(v)} startGame={startGame} />}
+                {displayGame && <Game SCREEN_WIDTH={SCREEN_WIDTH} SCREEN_HEIGHT={SCREEN_HEIGHT} PLAYER_SIZE={PLAYER_SIZE} PLAYER_X={PLAYER_X} PLAYER_Y={playerY} PIPE_WIDTH={PIPE_WIDTH} GAP={GAP} main_character={main_character} obstacles={obstacles} velocityRef={velocityRef} gameLoop={gameLoop} difficulty={difficulty} score={score} bestScore={bestScore[difficulty]} jump={jump} endGame={endGame} setDisplayGame={(v) => setDisplayGame(v)} setDisplayPauseMenu={(v) => setDisplayPauseMenu(v)} />}
+                {displayMenu && <Menu main_character={main_character} bestScore={bestScore[difficulty]} difficulty={difficulty} setDifficulty={(v: Difficulty) => setDifficulty(v)} startGame={startGame} />}
                 {displayPauseMenu && <PauseMenu setDisplayPauseMenu={v => setDisplayPauseMenu(v)} setDisplayGame={v => setDisplayGame(v)} setDisplayMenu={v => setDisplayMenu(v)} />}
-                {displayGameOver && <GameOver setDisplayMenu={v => setDisplayMenu(v)} setDisplayGameOver={v => setDisplayGameOver(v)} startGame={startGame} score={score} bestScore={bestScore} />}
+                {displayGameOver && <GameOver setDisplayMenu={v => setDisplayMenu(v)} setDisplayGameOver={v => setDisplayGameOver(v)} startGame={startGame} score={score} bestScore={bestScore[difficulty]} />}
             </div>
-            <MusicBar music={current ?? null} muted={soundMuted} toggleMute={() => setSoundMuted(!soundMuted)} skip={skip} />
+            <MusicBar music={current ?? null} muted={soundMuted} paused={paused} togglePause={togglePause} toggleMute={() => setSoundMuted(!soundMuted)} skip={skip} />
         </div >
     )
 }
